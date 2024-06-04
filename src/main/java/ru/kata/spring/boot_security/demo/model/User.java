@@ -49,7 +49,9 @@ public class User implements UserDetails {
 
     public User() {
     }
-
+    public Collection<Role> getAllRoles() {
+        return roles;
+    }
     public User(Long id, String username, String lastName, Integer age, String password, Set<Role> roles) {
         this.id = id;
         this.username = username;
@@ -64,6 +66,7 @@ public class User implements UserDetails {
                         .replace("ROLE_", ""))
                 .collect(Collectors.joining(" "));
     }
+
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }

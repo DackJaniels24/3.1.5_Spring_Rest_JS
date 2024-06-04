@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 
@@ -17,8 +18,11 @@ import ru.kata.spring.boot_security.demo.userDAO.UserDao;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -73,5 +77,8 @@ public class UserServiceImpl implements UserDetailsService {
         user.setRoles(new HashSet<>(roleRepository.findByName("ROLE_USER"))); //присваивает роль по умолчанию новому пользователю в дочернуюю таблицу
         userDao.save(user);
     }
-
+        public Collection<Role> getAllRoles() {
+            return entityManager.createQuery("select u from Role u", Role.class)
+                    .getResultList();
+        }
 }
