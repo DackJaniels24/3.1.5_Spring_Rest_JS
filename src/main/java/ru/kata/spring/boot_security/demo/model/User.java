@@ -15,8 +15,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 
+import java.security.Principal;
 import java.util.Set;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -41,20 +43,27 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     public User() {
     }
 
-    public User(Long id, String username, String lastName, Integer age, String password) {
+    public User(Long id, String username, String lastName, Integer age, String password, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.lastName = lastName;
         this.age = age;
         this.password = password;
+        this.roles = roles;
     }
-    public Set<Role> getRoles() {
-        return roles;
+    public String getAllUserRoles() {
+        return roles.stream()
+                .map(role -> role.getName()
+                        .replace("ROLE_", ""))
+                .collect(Collectors.joining(" "));
     }
-
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
