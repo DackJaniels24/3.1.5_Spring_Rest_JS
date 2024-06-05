@@ -11,7 +11,7 @@
     <title>Admin's Panel</title>
 </head>
 </head>
-
+<body style="height: 100vh"></body>
 <!-- верхняя панель -->
 <nav class="navbar navbar-dark bg-dark">
     <div class="col-11 text-white">
@@ -30,38 +30,39 @@
                 <a class="nav-link active" data-toggle="tab" href="#UserInfo"
                    aria-controls="UserInfo">User</a>
             </nav>
-<!--основная часть с таблицей -->
         </div>
         <div class="col-10 bg-light tab-content">
-            <br>
-            <h1>User information-page</h1>
-            <div class="card">
-                <div class="card-header">
-                    <span class="h5">About user</span>
-                </div>
-                <div class="card-body">
+            <div class="collapse multi-collapse fade show active" id="UserInfo">
+
+                <br>
+                <h1>User information-page</h1>
+                <div class="card">
+                    <div class="card-header">
+                        <span class="h5">About user</span>
+                    </div>
+                    <div class="card-body">
                     <table class="table table-striped">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Role</th>
-                </tr>
-<!--    <tr>-->
-<!--        <th>Id</th>-->
-<!--        <th>Username</th>-->
-<!--        <th>LastName</th>-->
-<!--        <th>Age</th>-->
-<!--    </tr>-->
-    <tr>
-        <td th:text="${user.getId()}">ID</td>
-        <td th:text="${user.getUsername()}">Username</td>
-        <td th:text="${user.getLastName()}">LastName</td>
-        <td th:text="${user.getAge()}">Age</td>
-        <td th:text="${user.getAllUserRoles()}">Role</td>
-    </tr>
-</table>
-</head>
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <td th:text="${user.getId()}">ID</td>
+                                <td th:text="${user.getUsername()}">Username</td>
+                                <td th:text="${user.getLastName()}">LastName</td>
+                                <td th:text="${user.getAge()}">Age</td>
+                                <td th:text="${user.getAllUserRoles()}">Role</td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+    </div>
+</div>
 </body>
 </html>
