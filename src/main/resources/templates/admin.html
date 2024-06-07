@@ -12,7 +12,7 @@
 </head>
 <body style="height: 100vh">
 <!--Модальное окно редактора-->
-    <div class="modal fade" th:id="'modalEdit' + ${user.getId()}">
+    <div class="modal fade" th:each="user : ${users}" th:id="'modalEdit' + ${user.getId()}" >
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -22,7 +22,7 @@
                     </button>
                 </div>
                 <div class="modal-body text-center font-weight-bold">
-                    <form id="edit" th:action="@{/edit(id=${user.getUsername()})}" th:method="POST" th:object="${user}">
+                    <form id="edit"  th:action="@{/edit(id=${user.getId()})}" th:method="POST" th:object="${user}">
                         <label for="id">ID</label>
                         <input id="id" type="number" class="form-control" disabled th:name="id" th:value="${user.getId()}">
                         <br>
@@ -38,14 +38,14 @@
                         <label for="age">Age</label>
                         <input id="age" type="number" class="form-control" th:name="age" th:value="${user.getAge()}"/>
                         <br>
-                        <label for="userRolesEdit">Roles</label>
-                        <select class="form-control" id="userRolesEdit" multiple required size="2" th:name="roles">
-                            <option th:each="role:${roles}"
-                                    th:selected="${user.getRoles().contains(role)}"
-                                    th:text="${role.getRole().replace('ROLE_', '') + ' '}"
-                                    th:value="${role.getId()}">
-                            </option>
-                        </select>
+<!--                        <label for="userRolesEdit">Roles</label>-->
+<!--                        <select class="form-control" id="userRolesEdit" multiple required size="2" th:name="roles">-->
+<!--                            <option th:each="role:${roles}"-->
+<!--                                    th:selected="${user.getRoles().contains(role)}"-->
+<!--                                    th:text="${role.getRole().replace('ROLE_', '') + ' '}"-->
+<!--                                    th:value="${role.getId()}">-->
+<!--                            </option>-->
+<!--                        </select>-->
                         <br>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Edit</button>
@@ -56,7 +56,7 @@
     </div>
 </td>
 <!-- Modal Delete-->
-<div class="modal fade" th:id="'modalDelete' + ${user.getId()}">
+<div class="modal fade" th:each="user : ${users}" th:id="'modalDelete' + ${user.getId()}">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -66,12 +66,15 @@
                 </button>
             </div>
             <div class="modal-body text-center font-weight-bold">
-                <form id="deleteUser" th:action="@{/remove(id=${user.getId()})}" th:method="POST" th:object="${user}">
+                <form id="deleteUser" th:action="@{/remove(id=${user.id})}" th:method="POST" th:object="${user}">
                     <label for="idDel">ID</label>
                     <input id="idDel" type="number" class="form-control" disabled th:name="id" th:value="${user.id}">
                     <br>
                     <label for="nameDel">Name</label>
                     <input id="nameDel" type="text" class="form-control" disabled  th:name="username" th:value="${user.username}"/>
+                    <br>
+                    <label for="lastnameDel">Last Name</label>
+                    <input id="lastnameDel" type="text" class="form-control" disabled  th:name="lastname" th:value="${user.lastName}"/>
                     <br>
                     <label for="passwordDel">Password</label>
                     <input id="passwordDel" type="text" class="form-control" disabled  th:name="password" value=""/>
@@ -79,14 +82,14 @@
                     <label for="ageDel">Age</label>
                     <input id="ageDel" type="number" class="form-control" disabled  th:name="age" th:value="${user.age}"/>
                     <br>
-                    <label for="userRolesDel">Roles</label>
-                    <select class="form-control" disabled  id="userRolesDel" multiple required size="2" th:name="roles">
-                        <option th:each="role:${roles}"
-                                th:selected="${user.getRoles().contains(role)}"
-                                th:text="${role.getRole().replace('ROLE_', '') + ' '}"
-                                th:value="${role.getId()}">
-                        </option>
-                    </select>
+<!--                    <label for="userRolesDel">Roles</label>-->
+<!--                    <select class="form-control" disabled  id="userRolesDel" multiple required size="2" th:name="roles">-->
+<!--                        <option th:each="role:${roles}"-->
+<!--                                th:selected="${user.getRoles().contains(role)}"-->
+<!--                                th:text="${role.getRole().replace('ROLE_', '') + ' '}"-->
+<!--                                th:value="${role.getId()}">-->
+<!--                        </option>-->
+<!--                    </select>-->
                     <br>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -107,6 +110,7 @@
         </div>
         </nav>
 <!-- левая панель -->
+
 <div class="container-fluid h-100 p-0">
     <div class="row h-100 m-0">
         <div class="col-2 p-0">
@@ -114,16 +118,18 @@
                 <br>
                 <a class="nav-link active" data-toggle="tab" href="#AdminPanel"
                    aria-controls="AdminPanel">Admin</a>
-                <a class="nav-link" data-toggle="tab" href="/id"
+                <a class="nav-link" data-toggle="tab" href="#UserInfo"
                    aria-controls="UserInfo">User</a>
             </nav>
         </div>
-        <!-- основная страница  -->
-            <div class="col-10 bg-light tab-content">
-                <div class="row h-100 m-0">
+
+        <!-- основная страница со всем пользователями -->
+        <div class="col-10 bg-light tab-content">
+            <div class="row h-100 m-0">
                 <div class="collapse multi-collapse fade show active" id="AdminPanel">
                     <br>
                     <h1>Admin panel</h1>
+
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#AllUsersTab"
@@ -134,6 +140,11 @@
                                aria-controls="NewUser" aria-selected="false">New User</a>
                         </li>
                     </ul>
+<!--                </div>-->
+
+
+<!--                </div>-->
+
                     <div class="tab-content" role="tabpanel">
                         <div class="collapse multi-collapse fade show active" id="AllUsersTab">
                             <div class="card-body">
@@ -168,6 +179,39 @@
                                 </table>
                             </div>
                         </div>
+                        <!-- страница текущего юзера-->
+                        <div class="collapse multi-collapse fade" id="UserInfo">
+                            <br>
+                            <h1>User information-page</h1>
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="h5">About user</span>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Age</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Role</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody >
+                                        <tr>
+                                            <td th:text = "${user.getId()}"></td>
+                                            <td th:text ="${user.getUsername()}"></td>
+                                            <td th:text ="${user.getLastName()}"></td>
+                                            <td th:text ="${user.getAge()}"></td>
+                                            <td th:text ="${user.getAllUserRoles()}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="tab-pane fade" id="NewUser" role="tabpanel"
                              aria-labelledby="newUser-tab">
                                     <h4 class="p-3 border-0 bg-light">Add new user</h4>
@@ -230,10 +274,16 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                 </div>
             </div>
-    </div>
+
+<!--    </div>-->
+<!--</div>-->
+
+
+</div>
+</div>
 </div>
 <script src="https://yastatic.net/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
