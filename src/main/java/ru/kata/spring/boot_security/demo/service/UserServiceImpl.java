@@ -30,16 +30,16 @@ public class UserServiceImpl implements UserDetailsService {
     @PersistenceContext
     private EntityManager entityManager;
     private final UsersRepository usersRepository;
-    private final RoleRepository roleRepository;
+   // private final RoleRepository roleRepository;
     private final UserDao userDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Autowired
-    public UserServiceImpl(UsersRepository usersRepository, RoleRepository roleRepository,
+    public UserServiceImpl(UsersRepository usersRepository,
                            UserDao userDao, @Lazy BCryptPasswordEncoder bCryptPasswordEncoder) { // аннотация Lazy позвоялет избежать цикличности
        this.usersRepository = usersRepository;
-       this.roleRepository = roleRepository;
+     //  this.roleRepository = roleRepository;
        this.userDao = userDao;
        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserDetailsService {
     @Transactional
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword())); // шифрует пароль
-        user.setRoles(new HashSet<>(roleRepository.findByName("ROLE_USER"))); //присваивает роль по умолчанию новому пользователю в дочернуюю таблицу
+        // user.setRoles(new HashSet<>(roleRepository.findByName("ROLE_USER"))); //присваивает роль по умолчанию новому пользователю в дочернуюю таблицу
         userDao.save(user);
     }
         public Collection<Role> getAllRoles() {

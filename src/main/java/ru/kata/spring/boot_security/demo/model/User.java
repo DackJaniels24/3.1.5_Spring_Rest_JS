@@ -62,7 +62,7 @@ public class User implements UserDetails {
     }
     public String getAllUserRoles() {
         return roles.stream()
-                .map(role -> role.getName()
+                .map(role -> role.getRole()
                         .replace("ROLE_", ""))
                 .collect(Collectors.joining(" "));
     }
