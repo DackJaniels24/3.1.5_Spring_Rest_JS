@@ -16,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -42,16 +43,21 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
-    public Set<Role> getRoles() {
+    public Collection<Role> getRoles() {
         return roles;
     }
-
+//    public Set<Role> getRoles() {
+//        return roles;
+//    }
     public User() {
+        this.roles = new HashSet<>();
     }
-    public Collection<Role> getAllRoles() {
-        return roles;
-    }
+//
+//    public User() {
+//    }
+//    public Collection<Role> getAllRoles() {
+//        return roles;
+//    }
     public User(Long id, String username, String lastName, Integer age, String password, Set<Role> roles) {
         this.id = id;
         this.username = username;

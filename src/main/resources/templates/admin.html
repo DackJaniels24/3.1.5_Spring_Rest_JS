@@ -38,6 +38,11 @@
                         <label for="age">Age</label>
                         <input id="age" type="number" class="form-control" th:name="age" th:value="${user.getAge()}"/>
                         <br>
+                        <select name="role1" multiple class="form-select"
+                                id="RolelSelect2">
+                            <option value= "1">ROLE_USER</option>
+                            <option value= "2">ROLE_ADMIN</option>
+                        </select>
 <!--                        <label for="userRolesEdit">Roles</label>-->
 <!--                        <select class="form-control" id="userRolesEdit" multiple required size="2" th:name="roles">-->
 <!--                            <option th:each="role:${roles}"-->
@@ -82,10 +87,12 @@
                     <label for="ageDel">Age</label>
                     <input id="ageDel" type="number" class="form-control" disabled  th:name="age" th:value="${user.age}"/>
                     <br>
-<!--                    <label for="userRolesDel">Roles</label>-->
+<!--                    <label for="roleDel">Roles</label>-->
+<!--                    <input id="roleDel" type="text" class="form-control" disabled  th:name="role" th:href="@{/id(id=${user.getId()})}" th:text="${user.getAllUserRoles()}" th:value="${user.getAllrole}"/>-->
+
 <!--                    <select class="form-control" disabled  id="userRolesDel" multiple required size="2" th:name="roles">-->
-<!--                        <option th:each="role:${roles}"-->
-<!--                                th:selected="${user.getRoles().contains(role)}"-->
+<!--                        <option th:text="${user.getRole()}">-->
+<!--                                th:selected="${user.getAl().contains(role)}"-->
 <!--                                th:text="${role.getRole().replace('ROLE_', '') + ' '}"-->
 <!--                                th:value="${role.getId()}">-->
 <!--                        </option>-->
@@ -102,7 +109,7 @@
 </tr>
 <!-- верхняя панель -->
 <nav class="navbar navbar-dark bg-dark">
-    <!--         Для отображения имейла и роли залогинившегося-->
+    <!--         Для отображения eмейла и роли залогинившегося-->
   <span class="navbar-brand mb-0 h1" th:text="${user.getUsername()} + ' with roles: ' + ${users[2].getAllUserRoles()}">
         </span>
         <div class="col-1">
@@ -140,10 +147,6 @@
                                aria-controls="NewUser" aria-selected="false">New User</a>
                         </li>
                     </ul>
-<!--                </div>-->
-
-
-<!--                </div>-->
 
                     <div class="tab-content" role="tabpanel">
                         <div class="collapse multi-collapse fade show active" id="AllUsersTab">
@@ -191,10 +194,10 @@
                                     <table class="table table-striped">
                                         <thead>
                                         <tr>
-                                            <th scope="col">Id</th>
+                                            <th scope="col">ID</th>
                                             <th scope="col">Name</th>
+                                            <th scope="col">Last Name</th>
                                             <th scope="col">Age</th>
-                                            <th scope="col">Email</th>
                                             <th scope="col">Role</th>
                                         </tr>
                                         </thead>
@@ -277,11 +280,6 @@
 
                 </div>
             </div>
-
-<!--    </div>-->
-<!--</div>-->
-
-
 </div>
 </div>
 </div>

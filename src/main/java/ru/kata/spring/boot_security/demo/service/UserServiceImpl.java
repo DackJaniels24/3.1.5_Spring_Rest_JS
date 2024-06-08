@@ -18,11 +18,7 @@ import ru.kata.spring.boot_security.demo.userDAO.UserDao;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -30,18 +26,19 @@ public class UserServiceImpl implements UserDetailsService {
     @PersistenceContext
     private EntityManager entityManager;
     private final UsersRepository usersRepository;
-   // private final RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
     private final UserDao userDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    private RoleServiceImpl roleService;
 
     @Autowired
-    public UserServiceImpl(UsersRepository usersRepository,
+    public UserServiceImpl(UsersRepository usersRepository, RoleServiceImpl roleService, RoleRepository roleRepository,
                            UserDao userDao, @Lazy BCryptPasswordEncoder bCryptPasswordEncoder) { // аннотация Lazy позвоялет избежать цикличности
        this.usersRepository = usersRepository;
-     //  this.roleRepository = roleRepository;
+       this.roleService = roleService;
        this.userDao = userDao;
        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+       this.roleRepository = roleRepository;
     }
 
     @Override
@@ -50,6 +47,10 @@ public class UserServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        for (Role role : user.getRoles()) {
+//            authorities.add(new SimpleGrantedAuthority(role.getRole()));
+//        }
         return user;
     }
 
@@ -73,12 +74,20 @@ public class UserServiceImpl implements UserDetailsService {
     }
     @Transactional
     public void save(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword())); // шифрует пароль
-        // user.setRoles(new HashSet<>(roleRepository.findByName("ROLE_USER"))); //присваивает роль по умолчанию новому пользователю в дочернуюю таблицу
-        userDao.save(user);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        User savedUser = usersRepository.save(user);// шифрует пароль
+//        Set<Role> roles = new HashSet<>();
+//        for (Long roleId : role_id) {
+//            Role role = roleRepository.findById(roleId).orElseThrow(() -> new RuntimeException("Роль не найдена"));
+//            roles.add(role);
+//        }
+        Role userRole = roleRepository.findByName("ROLE_USER");
+        savedUser.getRoles().add(userRole);//присваивает роль по умолчанию новому пользователю в дочернуюю таблицу
+//        savedUser.setRoles(roles);
+        usersRepository.save(savedUser);
     }
-        public Collection<Role> getAllRoles() {
-            return entityManager.createQuery("select u from Role u", Role.class)
-                    .getResultList();
-        }
+//        public Collection<Role> getAllRoles() {
+//            return entityManager.createQuery("select u from Role u", Role.class)
+//                    .getResultList();
+
 }

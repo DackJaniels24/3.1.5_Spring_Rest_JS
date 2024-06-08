@@ -21,26 +21,15 @@ public class Role implements GrantedAuthority {
         private Long id;
 
         @Column(name = "role_name")
-        private String role;
+        private String name;
 
         public Role() {  }
         @ManyToMany(mappedBy = "roles")
         private Set<User> users;
 
-//        public Set<User> getUser() {
-//        return users;
-//    }
-//
-//        public void setUser(Set<User> users) {
-//        this.users = users;
-//    }
-//        public Role(Long id) {
-//            this.id = id;
-//        }
-
-        public Role(Long id, String role) {
+        public Role(Long id, String name) {
             this.id = id;
-            this.role = role;
+            this.name = name;
         }
 
         public Long getId() {
@@ -52,11 +41,11 @@ public class Role implements GrantedAuthority {
         }
 
         public String getRole() {
-            return role;
+            return name;
         }
 
         public void setName(String name) {
-            this.role = role;
+            this.name = name;
         }
 
         @Override

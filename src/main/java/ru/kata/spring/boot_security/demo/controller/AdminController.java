@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 import java.security.Principal;
@@ -16,17 +17,19 @@ import java.security.Principal;
 @Controller
 public class AdminController {
     private final UserServiceImpl userService;
+    private final RoleServiceImpl roleService;
 
     @Autowired
-    public AdminController(UserServiceImpl userService) {
+    public AdminController(UserServiceImpl userService, RoleServiceImpl roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/admin")
     public String getAllUsers(Model model, Principal principal, User user) {
         model.addAttribute("users", userService.index());
         model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
-   //     model.addAttribute("role", userService.getAllRoles());
+//       model.addAttribute("role", userService.getAllRoles());
         return "admin";
     }
 
