@@ -15,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 
-import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Collection;
@@ -43,7 +42,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-    public Collection<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 //    public Set<Role> getRoles() {
@@ -58,6 +57,24 @@ public class User implements UserDetails {
 //    public Collection<Role> getAllRoles() {
 //        return roles;
 //    }
+
+    public void addRole(Role role) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        roles.add(role);
+    }
+//    public void changeRole(String role) {
+//        if (roles == null) {
+//            roles = new HashSet<>();
+//        }
+//        roles.add(role);
+//    }
+    public void removeRole(Role role) {
+        if (this.roles != null) {
+            this.roles.remove(role);
+        }
+    }
     public User(Long id, String username, String lastName, Integer age, String password, Set<Role> roles) {
         this.id = id;
         this.username = username;
@@ -144,7 +161,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 
 }
 

@@ -23,23 +23,24 @@
                 </div>
                 <div class="modal-body text-center font-weight-bold">
                     <form id="edit"  th:action="@{/edit(id=${user.getId()})}" th:method="POST" th:object="${user}">
-                        <label for="id">ID</label>
+                        <label for="id"><b>ID</b></label>
                         <input id="id" type="number" class="form-control" disabled th:name="id" th:value="${user.getId()}">
                         <br>
-                        <label for="name">Name</label>
+                        <label for="name"><b>Name</b></label>
                         <input id="name" type="text" class="form-control" th:name="username" th:value="${user.getUsername()}"/>
                         <br>
-                        <label for="LastName">Last Name</label>
+                        <label for="LastName"><b>Last Name</b></label>
                         <input id="lastname" type="text" class="form-control" th:name="lastName" th:value="${user.getLastName()}"/>
                         <br>
-                        <label for="password">Password</label>
+                        <label for="password"><b>Password</b></label>
                         <input id="password" type="text" class="form-control" th:name="password" value=""/>
                         <br>
-                        <label for="age">Age</label>
+                        <label for="age"><b>Age</b></label>
                         <input id="age" type="number" class="form-control" th:name="age" th:value="${user.getAge()}"/>
                         <br>
-                        <select name="role1" multiple class="form-select"
-                                id="RolelSelect2">
+                        <label for="role"><b>Role</b></label>
+                        <select name="role" multiple class="form-select"
+                                id="role">
                             <option value= "1">ROLE_USER</option>
                             <option value= "2">ROLE_ADMIN</option>
                         </select>
@@ -49,6 +50,19 @@
 <!--                                    th:selected="${user.getRoles().contains(role)}"-->
 <!--                                    th:text="${role.getRole().replace('ROLE_', '') + ' '}"-->
 <!--                                    th:value="${role.getId()}">-->
+<!--                            </option>-->
+<!--                        </select>-->
+<!--                        <label for="allRoles"><b>Role</b></label>-->
+<!--                        <select multiple class="form-control"-->
+<!--                                id="allRoles" name="roles">-->
+<!--&lt;!&ndash;                                th:size="${allRoles.size()}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                required>&ndash;&gt;-->
+<!--                            <option th:each="role:${allRoles}"-->
+<!--                                    th:value="${role.id}"-->
+<!--                                    th:selected="${userIter.getRoles().contains(role)}">-->
+<!--                                <th:block-->
+<!--                                        th:text="${role.getName().replace('ROLE_', '')}">-->
+<!--                                </th:block>-->
 <!--                            </option>-->
 <!--                        </select>-->
                         <br>
@@ -72,19 +86,19 @@
             </div>
             <div class="modal-body text-center font-weight-bold">
                 <form id="deleteUser" th:action="@{/remove(id=${user.id})}" th:method="POST" th:object="${user}">
-                    <label for="idDel">ID</label>
+                    <label for="idDel"><b>ID</b></label>
                     <input id="idDel" type="number" class="form-control" disabled th:name="id" th:value="${user.id}">
                     <br>
-                    <label for="nameDel">Name</label>
+                    <label for="nameDel"><b>Name</b></label>
                     <input id="nameDel" type="text" class="form-control" disabled  th:name="username" th:value="${user.username}"/>
                     <br>
-                    <label for="lastnameDel">Last Name</label>
+                    <label for="lastnameDel"><b>Last Name</b></label>
                     <input id="lastnameDel" type="text" class="form-control" disabled  th:name="lastname" th:value="${user.lastName}"/>
                     <br>
-                    <label for="passwordDel">Password</label>
+                    <label for="passwordDel"><b>Password</b></label>
                     <input id="passwordDel" type="text" class="form-control" disabled  th:name="password" value=""/>
                     <br>
-                    <label for="ageDel">Age</label>
+                    <label for="ageDel"><b>Age</b></label>
                     <input id="ageDel" type="number" class="form-control" disabled  th:name="age" th:value="${user.age}"/>
                     <br>
 <!--                    <label for="roleDel">Roles</label>-->
@@ -214,7 +228,7 @@
                                 </div>
                             </div>
                         </div>
-
+<!--Новый пользователь-->
                         <div class="tab-pane fade" id="NewUser" role="tabpanel"
                              aria-labelledby="newUser-tab">
                                     <h4 class="p-3 border-0 bg-light">Add new user</h4>
@@ -258,7 +272,7 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect2">Role</label>
                                                 <br>
-                                                <select name="role1" multiple class="form-select"
+                                                <select name="role" multiple class="form-select"
                                                         id="exampleFormControlSelect2">
                                                     <option value= "1">ROLE_USER</option>
                                                     <option value= "2">ROLE_ADMIN</option>

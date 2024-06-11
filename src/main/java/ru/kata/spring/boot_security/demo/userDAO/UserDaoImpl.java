@@ -35,11 +35,10 @@ private EntityManager entityManager;
     public void update(Long id, User user) {
         entityManager.merge(user);
     }
-//
+
     @Override
     public void save(User user) {
         entityManager.persist(user);
     }
-
 
 }
