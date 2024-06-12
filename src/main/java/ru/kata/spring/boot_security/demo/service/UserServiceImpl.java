@@ -21,6 +21,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserDetailsService {
     private final RoleRepository roleRepository;
     private final UserDao userDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-//    private final RoleServiceImpl roleService;
+   // private final RoleService roleService;
 
     @Autowired
     public UserServiceImpl(UsersRepository usersRepository, RoleRepository roleRepository,
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserDetailsService {
        this.userDao = userDao;
        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
        this.roleRepository = roleRepository;
+  //     this.roleService = roleService;
     }
 
     @Override
@@ -78,11 +80,28 @@ public class UserServiceImpl implements UserDetailsService {
         user.addRole(role);
         userDao.save(user);
     }
+//    @Transactional
+//    public void update(Long id, User user) {
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        userDao.update(id, user);
+//    }
+
     @Transactional
-    public void update(Long id, User user) {
+    public void update(User user, Long id) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        Role userRole = usersRepository.findByUsername(user.getAllUserRoles(role));
+//        Role roles = new Role();
+//        user.setRoles(roleService.getAllRoles());
         userDao.update(id, user);
     }
+
+
+
+
+
+
+
+
 //    @Transactional
 //    public void update(Long id, User user) {
 //        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

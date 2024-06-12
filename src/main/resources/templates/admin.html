@@ -22,7 +22,7 @@
                     </button>
                 </div>
                 <div class="modal-body text-center font-weight-bold">
-                    <form id="edit"  th:action="@{/edit(id=${user.getId()})}" th:method="POST" th:object="${user}">
+                    <form id="edit"  th:action="@{/edit(id=${user.getId()})}" th:method="PATCH" th:object="${user}">
                         <label for="id"><b>ID</b></label>
                         <input id="id" type="number" class="form-control" disabled th:name="id" th:value="${user.getId()}">
                         <br>
@@ -39,10 +39,15 @@
                         <input id="age" type="number" class="form-control" th:name="age" th:value="${user.getAge()}"/>
                         <br>
                         <label for="role"><b>Role</b></label>
-                        <select name="role" multiple class="form-select"
-                                id="role">
-                            <option value= "1">ROLE_USER</option>
-                            <option value= "2">ROLE_ADMIN</option>
+                        <select id="role" type = "text" multiple class="form-select" th:name="role" th:value="${user.getRoles()}">
+                            <!--/*@thymesVar id="role" type=""*/-->
+<!--                            <option th:each="role:${roles}"-->
+<!--                                    th:selected="${user.getRoles().contains(role)}"-->
+<!--                                                                    th:text="${user.getRole().replace('ROLE_', '') + ' '}"-->
+<!--                                                                    th:value="${user.getId()}">-->
+<!--                                                            </option>-->
+<!--                            <option value= "1">USER</option>-->
+<!--                            <option value= "2">ADMIN</option>-->
                         </select>
 <!--                        <label for="userRolesEdit">Roles</label>-->
 <!--                        <select class="form-control" id="userRolesEdit" multiple required size="2" th:name="roles">-->

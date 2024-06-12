@@ -31,11 +31,22 @@ private EntityManager entityManager;
         entityManager.remove(show(id));
     }
 
-    @Override
-    public void update(Long id, User user) {
-        entityManager.merge(user);
-    }
+//    @Override
+//    public void update(User user) {
+//        entityManager.merge(user);
+//    }
 
+
+    @Override
+    public void update(Long id, User updatedUser) {
+        User toBeUpdatedUser = show(id);
+        toBeUpdatedUser.setRoles(updatedUser.getRoles());
+        toBeUpdatedUser.setUsername(updatedUser.getUsername());
+        toBeUpdatedUser.setLastName(updatedUser.getLastName());
+        toBeUpdatedUser.setAge(updatedUser.getAge());
+        toBeUpdatedUser.setPassword(updatedUser.getPassword());
+        entityManager.merge(updatedUser);
+    }
     @Override
     public void save(User user) {
         entityManager.persist(user);

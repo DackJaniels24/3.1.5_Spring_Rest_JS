@@ -45,9 +45,7 @@ public class User implements UserDetails {
     public Set<Role> getRoles() {
         return roles;
     }
-//    public Set<Role> getRoles() {
-//        return roles;
-//    }
+
     public User() {
         this.roles = new HashSet<>();
     }
@@ -64,12 +62,7 @@ public class User implements UserDetails {
         }
         roles.add(role);
     }
-//    public void changeRole(String role) {
-//        if (roles == null) {
-//            roles = new HashSet<>();
-//        }
-//        roles.add(role);
-//    }
+
     public void removeRole(Role role) {
         if (this.roles != null) {
             this.roles.remove(role);
