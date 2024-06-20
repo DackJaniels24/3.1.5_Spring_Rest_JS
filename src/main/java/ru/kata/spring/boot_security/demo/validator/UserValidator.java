@@ -2,11 +2,14 @@ package ru.kata.spring.boot_security.demo.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -33,5 +36,14 @@ public class UserValidator implements Validator {
         if (optionalPerson.isPresent()) {
             errors.rejectValue("username", "", "Человек с таким именем пользователя существует");
         }
+    }
+    public String getErrorMsg(BindingResult bindingResult){
+        StringBuilder errorMsg = new StringBuilder();
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        for(FieldError error : errors) {
+            errorMsg.append(error.getField()).append(" - ")
+                    .append(error.getDefaultMessage()).append(";");
+        }
+        return errorMsg.toString();
     }
 }
